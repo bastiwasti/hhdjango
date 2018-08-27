@@ -1,0 +1,64 @@
+/*!
+ * Start Bootstrap - Scrolling Nav (https://startbootstrap.com/template-overviews/scrolling-nav)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-scrolling-nav/blob/master/LICENSE)
+ */
+
+header {
+  padding: 154px 0 100px;
+}
+
+@media (min-width: 992px) {
+  header {
+    padding: 156px 0 100px;
+  }
+
+  section {
+  padding: 50px 0;
+ /* background-image: url('../images/footer.JPG'); */
+}
+
+h2 { /* 1 priority score, not enough to override Bootstrap jumbotron definition */
+  color: #93c572 ;
+}
+
+
+ }
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+section {
+  padding: 50px 0;
+ /* background-image: url('../images/footer.JPG'); */
+}
+
+h2 { /* 1 priority score, not enough to override Bootstrap jumbotron definition */
+  color: #dc3545;
+}
+
+.lead {
+    font-size: 16px;
+}
+
+table {
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
+
+tr:nth-child(1) {
+    background-color: #f2f2f2
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
