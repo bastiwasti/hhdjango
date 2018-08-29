@@ -44,22 +44,40 @@
     <header class="bg-white text-black">
       <div class="container text-center">
 
-        <p>Zahleneingabe</p>
-
-        Gesamtsumme Ausgaben: {{ sum_output }}
-        Gesamtsumme Plan: {{ sum_output2 }}
-        <br>
-        Differenz: {{ sum_output3 }}
-
-        {{ testen }}
-        <br>
-
-        {{ testsum.Anzahl_LEH }}
-        {{ testsum.Preis_LEH }}
-
-
+        <h1>Ausgabenplan</h1>
       </div>
     </header>
+
+    <section id="Pivottable">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Pivot der Ausgaben</h2>
+
+            <table id="pivottable" class="tablesorter">
+              <thead>
+                  <tr>
+                {% for key in pivot.0 %}
+                    <th>{{key}}</th>
+                {% endfor %}
+                  </tr>
+              </thead>
+              <tbody>
+            {% for row in pivot %}
+              <tr>
+              {% for key, value in row.items %}
+                      <td>{{ value }}</td>
+              {% endfor %}
+                  </tr>
+            {% endfor %}
+              </tbody>
+            </table>
+
+
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section id="Start">
       <div class="container">
@@ -67,9 +85,13 @@
           <div class="col-lg-8 mx-auto">
             <h2>Eingabe der Ausgaben</h2>
             <p class="lead">
-              <form action="#contact" method="post">
+              <form action="#Start" method="post">
                 {% csrf_token %}
-                {{ form }}
+                <p class="lead"> Summe: {{ form.Summe }} </p>
+                <p class="lead"> Typ: {{ form.Typ }} </p>
+                <p class="lead"> Person: {{ form.Person }} </p>
+                <p class="lead"> Beschreibung: {{ form.Beschreibung }} </p>
+                <p class="lead"> Zeitpunkt: {{ form.Zeitpunkt }} </p>
                <input type="submit" name="add" value="Hinzufügen" />
             </form>
           {% include "hhdata/post_list.html" %}
@@ -102,6 +124,7 @@
     $(document).ready(function()
     {
         $("#myTable").tablesorter();
+        $("#pivottable").tablesorter();
     }
 );
 </script>

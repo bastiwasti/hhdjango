@@ -46,7 +46,6 @@ h2 { /* 1 priority score, not enough to override Bootstrap jumbotron definition 
 
 table {
     border-spacing: 0;
-    width: 100%;
     border: 1px solid #ddd;
 }
 
@@ -55,10 +54,10 @@ th, td {
     padding: 16px;
 }
 
-tr:nth-child(1) {
+tr:nth-child(even) {
     background-color: #f2f2f2
 }
 
-tr:nth-child(even) {
+th {
     background-color: #f2f2f2
 }

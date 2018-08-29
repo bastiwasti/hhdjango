@@ -1,28 +1,3 @@
-<!--
-{% for post in posts %}
-    <div>
-        <p class="lead">
-            Summe: <b>{{ post.Summe }}</b>
-            Typ: <b>{{ post.get_Typ_display }}</b>
-            Person: <b>{{ post.get_Person_display }}</b>
-            Beschreibung:  <b>{{ post.Beschreibung }}</b>
-            Zeitpunkt:  <b>{{ post.Zeitpunkt }}</b>
-        <p class="lead">Veröffentlicht: <b>{{ post.pub_date }}</b></p>
-        <p class="lead">User: <b>{{ post.User }}</b></p>
-                <hhdata action="#contact" method="POST"  style="display: inline;">
-                  {% csrf_token %}
-                  <input type="hidden" name="pk" value="{{ post.pk }}">
-                  <input class="btn btn-default btn-danger" name="update" type="submit" value="Ändern">
-                </hhdata>
-                <hhdata action="#contact" method="POST"  style="display: inline;">
-                  {% csrf_token %}
-                  <input type="hidden" name="pk" value="{{ post.pk }}">
-                  <input class="btn btn-default btn-danger" name="delete" type="submit" value="Löschen">
-                </hhdata>
-        </p>
-    </div>
-{% endfor %}
--->
 
 <table id="myTable" class="tablesorter">
     <thead>
@@ -39,25 +14,25 @@
     <tbody>
 {% for post in posts %}
 <tr>
-  <th> {{ post.Summe }}</th>
-  <th> {{ post.get_Typ_display }}</th>
-  <th> {{ post.get_Person_display }}</th>
-  <th> {{ post.Beschreibung }}</th>
-  <th> {{ post.Zeitpunkt }}</th>
-   <th>
-                    <form action="#contact" method="POST"  style="display: inline;">
+  <td> {{ post.Summe }}</td>
+  <td> {{ post.get_Typ_display }}</td>
+  <td> {{ post.get_Person_display }}</td>
+  <td> {{ post.Beschreibung }}</td>
+  <td> {{ post.Zeitpunkt }}</td>
+   <td>
+                    <form action="#Start" method="POST"  style="display: inline;">
                   {% csrf_token %}
                   <input type="hidden" name="pk" value="{{ post.pk }}">
                   <input class="btn btn-default btn-danger" name="update" type="submit" value="Ändern">
                 </form>
-    </th>
-       <th>
- <form action="#contact" method="POST"  style="display: inline;">
+    </td>
+       <td>
+ <form action="#Start" method="POST"  style="display: inline;">
                   {% csrf_token %}
                   <input type="hidden" name="pk" value="{{ post.pk }}">
                   <input class="btn btn-default btn-danger" name="delete" type="submit" value="Löschen">
                 </form>
-    </th>
+    </td>
 </tr>
 {% endfor %}
     </tbody>
