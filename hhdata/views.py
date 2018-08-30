@@ -3,11 +3,11 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.db.models import IntegerField, F, Sum, Case, When
-from django.db import connection
 
 
 from .forms import NameForm
 from hhdata.models import Ausgaben, AusgabenPlan
+from hhdata.utils import exec_sql,my_custom_sql,dictfetchall
 
 @login_required()
 def get_name(request):
@@ -50,34 +50,21 @@ def get_name(request):
     posts = Ausgaben.objects.filter(User=request.user)
     return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot})
 
-
-def exec_sql(path):
-    fd = open(path, 'r')
-    string = fd.read()
-    build = string.replace('\n',' ')
-    return my_custom_sql(build)
-
-def my_custom_sql(sql):
-    with connection.cursor() as cursor:
-        cursor.execute(sql)
-        row = dictfetchall(cursor)
-    return row
-
-def dictfetchall(cursor):
-    "Return all rows from a cursor as a dict"
-    columns = [col[0] for col in cursor.description]
-    return [
-        dict(zip(columns, row))
-        for row in cursor.fetchall()
-    ]
-
-
-# todo funktionen auslagern:
-# funktionen wenn möglich soweit auslagern, dass sie mit einem source befehl oder ähnlichem bei konsolenstart eingelesen
-# werden können
+# todo live gehen:
+# git projekt auf github füllen, pythonanywhere neuen account erstellen und frei verfügbar machen
+# wenn ab nächster woche 'in use' ergeben sich bestimmt neue anforderungen :)
 
 # todo api zu bank:
 # checken ob bank logins nicht doch irgendwie verfügbar sind... würde komplett andere möglichkeiten geben
 
-# todo live gehen:
-# git projekt auf github füllen, pythonanywhere neuen account erstellen und frei verfügbar machen
+# todo grafiken bauen:
+# daten irgendwie visualisieren...
+# evtl. kann ich neue tables erstellen und die dann direkt ansprechen?
+
+# todo tabellen verbessern:
+# wenn möglich dynamischen filter darauf setzen?
+# mehrere monate werden abgezogen, zu jedem monat wird ein neuer tab erstellt
+# evtl. jquery datatables versuchen zu initialisieren, der html part wird ähnlich aussehen könnte ich mir vorstellen?!
+
+# todo csv export der gepflegten daten:
+# per knopf soll es möglich sein, einen csv abzug der daten abzuziehen in einem für excel guten format
