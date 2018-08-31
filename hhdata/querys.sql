@@ -3,25 +3,25 @@ select
     a.Monat,
     a.Typ,
     Anzahl,
-    Summe,
+    Betrag,
     Gesamt,
-    Gesamt-Summe
+    Gesamt+Betrag Rest
 from
     ( SELECT
         strftime('%Y',
-        a.pub_date) as Jahr,
+        a."Buchung") as Jahr,
         strftime('%m',
-        a.pub_date) as Monat,
+        a."Buchung") as Monat,
         a.TYP,
         count(*) Anzahl,
-        sum(a.Summe) Summe
+        sum(a.Betrag) Betrag
     FROM
-        hhdata_Ausgaben a
+        hhdata_transaktion a
     group by
         a.typ,
         Jahr,
         Monat         ) a
-join
+left join
     (
         select
             typ,
@@ -31,4 +31,16 @@ join
         group by
             typ
     ) b
-        on a.typ = b.typ;
+        on a.typ = b.typ
+        order by jahr desc, monat desc;
+
+--SELECT
+--        strftime('%Y',
+--        a."Buchung") as Jahr,
+--        strftime('%m',
+--        a."Buchung") as Monat,
+--        a.TYP,
+--        Buchung,
+--        a.Betrag Betrag
+--    FROM
+--        hhdata_transaktion a

@@ -83,17 +83,16 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto">
+
+            <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="csv_file">
+    <input type="submit" value="Upload">
+</form>
+
+
             <h2>Eingabe der Ausgaben</h2>
             <p class="lead">
-              <form action="#Start" method="post">
-                {% csrf_token %}
-                <p class="lead"> Summe: {{ form.Summe }} </p>
-                <p class="lead"> Typ: {{ form.Typ }} </p>
-                <p class="lead"> Person: {{ form.Person }} </p>
-                <p class="lead"> Beschreibung: {{ form.Beschreibung }} </p>
-                <p class="lead"> Zeitpunkt: {{ form.Zeitpunkt }} </p>
-               <input type="submit" name="add" value="Hinzufügen" />
-            </form>
           {% include "hhdata/post_list.html" %}
             </p>
           </div>

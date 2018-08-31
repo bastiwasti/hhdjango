@@ -2,37 +2,23 @@
 <table id="myTable" class="tablesorter">
     <thead>
 <tr>
-  <th>Summe</th>
+  <th>Betrag</th>
   <th>Typ</th>
-  <th>Person</th>
-  <th>Beschreibung</th>
-  <th>Zeitpunkt</th>
-  <th> </th>
-  <th> </th>
+  <th>Auftraggeber</th>
+  <th>Buchungstext</th>
+  <th>Verwendungszweck</th>
+  <th>Buchung</th>
 </tr>
 </thead>
     <tbody>
 {% for post in posts %}
 <tr>
-  <td> {{ post.Summe }}</td>
-  <td> {{ post.get_Typ_display }}</td>
-  <td> {{ post.get_Person_display }}</td>
-  <td> {{ post.Beschreibung }}</td>
-  <td> {{ post.Zeitpunkt }}</td>
-   <td>
-                    <form action="#Start" method="POST"  style="display: inline;">
-                  {% csrf_token %}
-                  <input type="hidden" name="pk" value="{{ post.pk }}">
-                  <input class="btn btn-default btn-danger" name="update" type="submit" value="Ändern">
-                </form>
-    </td>
-       <td>
- <form action="#Start" method="POST"  style="display: inline;">
-                  {% csrf_token %}
-                  <input type="hidden" name="pk" value="{{ post.pk }}">
-                  <input class="btn btn-default btn-danger" name="delete" type="submit" value="Löschen">
-                </form>
-    </td>
+  <td> {{ post.Betrag }}</td>
+  <td> {{ post.Typ }}</td>
+  <td> {{ post.Auftraggeber }}</td>
+  <td> {{ post.Buchungstext }}</td>
+  <td> {{ post.Verwendungszweck }}</td>
+  <td> {{ post.Buchung }}</td>
 </tr>
 {% endfor %}
     </tbody>

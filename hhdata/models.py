@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import date
 
 Typ = (
     ('LEH', 'LEH'),
@@ -19,20 +18,6 @@ Person = (
 )
 
 
-class Ausgaben(models.Model):
-    Summe = models.FloatField()
-    Typ = models.CharField(
-        max_length=21,
-        choices=Typ)
-    Person = models.CharField(
-        max_length=20,
-        choices=Person)
-    Beschreibung = models.CharField(max_length=200)
-    Zeitpunkt = models.DateField()
-    User = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-
-
 class AusgabenPlan(models.Model):
     Summe = models.FloatField()
     Typ = models.CharField(
@@ -41,3 +26,15 @@ class AusgabenPlan(models.Model):
     Person = models.CharField(
         max_length=20,
         choices=Person)
+
+
+class Transaktion(models.Model):
+    Betrag = models.FloatField()
+    Typ = models.CharField(
+        max_length=200)
+    Auftraggeber = models.CharField(
+        max_length=200)
+    Buchungstext = models.CharField(
+        max_length=200)
+    Verwendungszweck = models.CharField(max_length=200)
+    Buchung = models.DateField()

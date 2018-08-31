@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from .models import Ausgaben, AusgabenPlan
+from .models import Transaktion, AusgabenPlan
 
-class AusgabenAdmin(admin.ModelAdmin):
-    list_display = ('User','Summe','Typ','Person','Beschreibung','Zeitpunkt','pub_date')
+class TransaktionAdmin(admin.ModelAdmin):
+    list_display = ('Betrag','Typ','Auftraggeber','Buchungstext','Verwendungszweck','Buchung')
 
 class AusgabenPlanAdmin(admin.ModelAdmin):
     list_display = ('Summe','Typ','Person')
 
 
-admin.site.register(Ausgaben, AusgabenAdmin)
+admin.site.register(Transaktion, TransaktionAdmin)
 admin.site.register(AusgabenPlan,AusgabenPlanAdmin)
