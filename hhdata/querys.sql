@@ -44,3 +44,4 @@ left join
 --        a.Betrag Betrag
 --    FROM
 --        hhdata_transaktion a
+

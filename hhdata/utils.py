@@ -1,7 +1,7 @@
 from django.db import connection
 import pandas as pd
 import numpy as np
-from .models import Transaktion
+from hhdata.models import Transaktion, Klassifizierung
 
 
 def exec_sql(path):
@@ -102,7 +102,7 @@ def dictfetchall(cursor):
 #
 # # Funktion aus bruchstücken schreiben
 #
-#file = '..//Umsatzanzeige_DE13701633700004119339_20180831.csv'
+# file = '..//Umsatzanzeige_DE13701633700004119339_20180831.csv'
 
 def write_data_to_django(file):
     # CSV einlesen:
@@ -116,16 +116,7 @@ def write_data_to_django(file):
     df = df.rename(columns={'Auftraggeber/Empfänger': 'Auftraggeber'})
     df = df.replace(np.NaN,'')
 
-    # Klassifikation ( todo: funktion basierend auf django feldern einbauen! )
-    conditions = [
-        df['Auftraggeber'].str.upper().str.contains('LIDL') |
-        df['Auftraggeber'].str.upper().str.contains('ZUG UM ZUG') |
-        df['Auftraggeber'].str.upper().str.contains('REWE') |
-        df['Auftraggeber'].str.upper().str.contains('FLEISCHER'),
-        df['Auftraggeber'].str.upper().str.contains('ANNELIESE KOETTING')
-    ]
-    choices = ['LEH', 'Miete']
-    df['Typ'] = np.select(conditions, choices, default='Nicht vergeben')
+    df = classify(df)
 
     # Momentanen Datenstand einlesen:
     dfdjango = pd.DataFrame(list(Transaktion.objects.all().values()))
@@ -165,3 +156,36 @@ def write_data_to_django(file):
 # df['Valuta'] = pd.to_datetime(df['Buchung'])
 #
 # df
+#
+
+def UpdateClassify():
+    df1 = pd.DataFrame(list(Transaktion.objects.all().values()))
+    df2 = classify(pd.DataFrame(list(Transaktion.objects.all().values())))
+
+    dfinsert = pd.merge(df1, df2, on=['id']
+                        , how='inner')
+    dfinsert['check'] = np.where((dfinsert['Typ_x'] != dfinsert['Typ_y']),1,0)
+    df3 = dfinsert[dfinsert['check']==1]
+
+    Transaktion.objects.filter(id__in = list(dfinsert[dfinsert['check']==1]['id'])).delete()
+
+    if not isinstance(df3, str):
+        for rows in df3.itertuples():
+            Transaktion.objects.create(Betrag=rows.Betrag_x,
+                                       Typ=rows.Typ_y,
+                                       Auftraggeber=rows.Auftraggeber_x,
+                                       Buchungstext=rows.Buchungstext_x,
+                                       Verwendungszweck=rows.Verwendungszweck_x,
+                                       Buchung=rows.Buchung_x)
+
+
+def classify(data):
+    conditions = list()
+    for n in range(0,Klassifizierung.objects.count()):
+        conditions.append(data[list(Klassifizierung.objects.values_list('Feld', flat=True))[n]].str.lower().str.contains(list(Klassifizierung.objects.values_list('Inhalt', flat=True))[n]))
+
+    choices = list(Klassifizierung.objects.values_list('Typ',flat=True))
+
+    data['Typ'] = np.select(conditions, choices, default='Nicht vergeben')
+    return data
+

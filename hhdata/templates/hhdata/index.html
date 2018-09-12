@@ -44,7 +44,7 @@
     <header class="bg-white text-black">
       <div class="container text-center">
 
-        <h1>Ausgabenplan</h1>
+        <h1>Ausgabenplan des Gemeinschaftskontos</h1>
       </div>
     </header>
 
@@ -73,7 +73,6 @@
               </tbody>
             </table>
 
-
           </div>
         </div>
       </div>
@@ -84,14 +83,27 @@
         <div class="row">
           <div class="col-lg-8 mx-auto">
 
-            <form action="" method="post" enctype="multipart/form-data">
+               <h2>Steuerung</h2>
+
+<form action="#Start" method="post">
+    {% csrf_token %}
+    {{form.my_choice_field}}
+<input type="submit" name="filter" value="Select">
+</form>
+<br>
+
+ <form action="#Start" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="file" name="csv_file">
     <input type="submit" value="Upload">
 </form>
+              <br>
+              Update Classify:
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="submit" name="update" value="Update">
+</form>
 
-
-            <h2>Eingabe der Ausgaben</h2>
             <p class="lead">
           {% include "hhdata/post_list.html" %}
             </p>

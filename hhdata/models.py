@@ -38,3 +38,13 @@ class Transaktion(models.Model):
         max_length=200)
     Verwendungszweck = models.CharField(max_length=200)
     Buchung = models.DateField()
+
+
+class Klassifizierung(models.Model):
+    Feld = models.CharField(
+        max_length=200)
+    Inhalt = models.CharField(
+        max_length=200)
+    Typ = models.CharField(
+        max_length=200,
+        choices=Typ)
