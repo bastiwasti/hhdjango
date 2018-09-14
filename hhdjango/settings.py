@@ -25,7 +25,8 @@ SECRET_KEY = 'g&wx2ej0q)np+43mn)_^3)r3ai$b@v8%!c_%v619opuh+psax='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['skappler.pythonanywhere.com']
+ALLOWED_HOSTS = ['skappler.pythonanywhere.com',
+                 '127.0.0.1']
 
 
 # Application definition

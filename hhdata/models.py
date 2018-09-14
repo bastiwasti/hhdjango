@@ -17,6 +17,12 @@ Person = (
     ('Gemeinsam', 'Gemeinsam'),
 )
 
+TransFeld = (
+    ('Auftraggeber', 'Auftraggeber'),
+    ('Buchungstext', 'Buchungstext'),
+    ('Verwendungszweck', 'Verwendungszweck'),
+)
+
 
 class AusgabenPlan(models.Model):
     Summe = models.FloatField()
@@ -42,9 +48,11 @@ class Transaktion(models.Model):
 
 class Klassifizierung(models.Model):
     Feld = models.CharField(
-        max_length=200)
+        max_length=200,
+        choices=TransFeld)
     Inhalt = models.CharField(
         max_length=200)
     Typ = models.CharField(
-        max_length=200,
-        choices=Typ)
+        max_length=200)
+
+
