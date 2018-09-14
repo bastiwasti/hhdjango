@@ -19,14 +19,14 @@ def get_name(request):
         write_data_to_django(csvfile)
 
         posts = Transaktion.objects.all().order_by('-Buchung')
-        pivot = exec_sql('hhdata\\querys.sql')
+        pivot = exec_sql('hhdata/querys.sql')
         form = MyForm(request.POST)
         return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot})
 
     if request.POST and 'update' in request.POST:
         UpdateClassify()
         posts = Transaktion.objects.all().order_by('-Buchung')
-        pivot = exec_sql('hhdata\\querys.sql')
+        pivot = exec_sql('hhdata/querys.sql')
         form = MyForm(request.POST)
         return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot})
     # if a GET (or any other method) we'll create a blank hhdata
@@ -44,14 +44,14 @@ def get_name(request):
                 check2 = str(check)[4:]
 
             posts = Transaktion.objects.filter(Buchung__year=int(str(check)[:4]), Buchung__month=int(str(check)[4:])).order_by('-Buchung')
-            pivot = exec_sql('hhdata\\querys.sql')
+            pivot = exec_sql('hhdata/querys.sql')
             pivot = [d for d in pivot if d['Jahr'] in str(check)[:4] and d['Monat'] in check2]
 
             return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot})
 
     form = MyForm()
     posts = Transaktion.objects.all().order_by('-Buchung')
-    pivot = exec_sql('hhdata\\querys.sql')
+    pivot = exec_sql('hhdata/querys.sql')
     return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot})
 
 # todo radio button:

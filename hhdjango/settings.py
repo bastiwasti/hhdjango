@@ -25,7 +25,7 @@ SECRET_KEY = 'g&wx2ej0q)np+43mn)_^3)r3ai$b@v8%!c_%v619opuh+psax='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['skappler.pythonanywhere.com']
 
 
 # Application definition
@@ -119,6 +119,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = '/home/skappler/hhdjango/static/'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
