@@ -182,7 +182,7 @@ def UpdateClassify():
 def classify(data):
     conditions = list()
     for n in range(0,Klassifizierung.objects.count()):
-        conditions.append(data[list(Klassifizierung.objects.values_list('Feld', flat=True))[n]].str.lower().str.contains(list(Klassifizierung.objects.values_list('Inhalt', flat=True))[n]))
+        conditions.append(data[list(Klassifizierung.objects.values_list('Feld', flat=True))[n]].str.contains(list(Klassifizierung.objects.values_list('Inhalt', flat=True))[n]))
 
     choices = list(Klassifizierung.objects.values_list('Typ',flat=True))
 

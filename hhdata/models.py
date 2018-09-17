@@ -23,17 +23,6 @@ TransFeld = (
     ('Verwendungszweck', 'Verwendungszweck'),
 )
 
-
-class AusgabenPlan(models.Model):
-    Summe = models.FloatField()
-    Typ = models.CharField(
-        max_length=21,
-        choices=Typ)
-    Person = models.CharField(
-        max_length=20,
-        choices=Person)
-
-
 class Transaktion(models.Model):
     Betrag = models.FloatField()
     Typ = models.CharField(
@@ -55,4 +44,33 @@ class Klassifizierung(models.Model):
     Typ = models.CharField(
         max_length=200)
 
+
+from django.utils.functional import lazy
+
+def get_menu_choices():
+    choices_tuple = [(q['Typ'], q['Typ']) for q in Klassifizierung.objects.values('Typ').distinct()]
+    return choices_tuple
+
+class Hierachie(models.Model):
+
+    Typ1 = models.CharField(max_length=200, blank=True)
+    Typ2 = models.CharField(max_length=200, blank=True)
+    Typ3 = models.CharField(max_length=200, blank=True)
+
+    def __init__(self,  *args, **kwargs):
+        super(Hierachie, self).__init__(*args, **kwargs)
+        self._meta.get_field('Typ1').choices = lazy(get_menu_choices, list)()
+
+def get_typ():
+    choices_tuple = [(q['Typ2'], q['Typ2']) for q in Hierachie.objects.values('Typ2').distinct()]
+    return choices_tuple
+
+class AusgabenPlan(models.Model):
+    Summe = models.FloatField()
+    Typ = models.CharField(
+        max_length=21)
+
+    def __init__(self,  *args, **kwargs):
+        super(AusgabenPlan, self).__init__(*args, **kwargs)
+        self._meta.get_field('Typ').choices = lazy(get_typ, list)()
 

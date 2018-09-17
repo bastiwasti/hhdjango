@@ -1,47 +1,39 @@
 select
     a.Jahr,
     a.Monat,
-    a.Typ,
+    a.Typ2,
+    a.Typ3,
     Anzahl,
     Betrag,
-    Gesamt,
-    Gesamt+Betrag Rest
+    Plan,
+    Plan+Betrag Rest
 from
     ( SELECT
         strftime('%Y',
         a."Buchung") as Jahr,
         strftime('%m',
         a."Buchung") as Monat,
-        a.TYP,
+        typ2,
+        typ3,
         count(*) Anzahl,
         sum(a.Betrag) Betrag
     FROM
         hhdata_transaktion a
+        left join hhdata_hierachie b on a.typ = b.typ1
     group by
-        a.typ,
+        typ2,
+        typ3,
         Jahr,
-        Monat         ) a
+        Monat ) a
 left join
     (
         select
             typ,
-            sum(Summe) as Gesamt
+            sum(Summe) as Plan
         from
             hhdata_AusgabenPlan
         group by
             typ
     ) b
-        on a.typ = b.typ
-        order by jahr desc, monat desc;
-
---SELECT
---        strftime('%Y',
---        a."Buchung") as Jahr,
---        strftime('%m',
---        a."Buchung") as Monat,
---        a.TYP,
---        Buchung,
---        a.Betrag Betrag
---    FROM
---        hhdata_transaktion a
+        on a.typ2 = b.typ
 
