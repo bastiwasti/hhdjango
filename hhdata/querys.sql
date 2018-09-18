@@ -36,4 +36,4 @@ left join
             typ
     ) b
         on a.typ2 = b.typ
-
+order by typ3, typ2 asc

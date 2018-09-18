@@ -21,14 +21,16 @@ def get_name(request):
         posts = Transaktion.objects.all().order_by('-Buchung')
         pivot = exec_sql('hhdata/querys.sql')
         form = MyForm(request.POST)
-        return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot})
+        pivot2 = exec_sql('hhdata/querys_typ2.sql')
+        return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot, 'pivot2': pivot2})
 
     if request.POST and 'update' in request.POST:
         UpdateClassify()
         posts = Transaktion.objects.all().order_by('-Buchung')
         pivot = exec_sql('hhdata/querys.sql')
         form = MyForm(request.POST)
-        return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot})
+        pivot2 = exec_sql('hhdata/querys_typ2.sql')
+        return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot, 'pivot2': pivot2})
     # if a GET (or any other method) we'll create a blank hhdata
     #else:
 
@@ -46,13 +48,16 @@ def get_name(request):
             posts = Transaktion.objects.filter(Buchung__year=int(str(check)[:4]), Buchung__month=int(str(check)[4:])).order_by('-Buchung')
             pivot = exec_sql('hhdata/querys.sql')
             pivot = [d for d in pivot if d['Jahr'] in str(check)[:4] and d['Monat'] in check2]
-
-            return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot})
+            pivot2 = exec_sql('hhdata/querys_typ2.sql')
+            pivot2 = [d for d in pivot2 if d['Jahr'] in str(check)[:4] and d['Monat'] in check2]
+            return render(request, 'hhdata/index.html',
+                          {'form': form, 'posts': posts, 'pivot': pivot, 'pivot2': pivot2})
 
     form = MyForm()
     posts = Transaktion.objects.all().order_by('-Buchung')
     pivot = exec_sql('hhdata/querys.sql')
-    return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot})
+    pivot2 = exec_sql('hhdata/querys_typ2.sql')
+    return render(request, 'hhdata/index.html', {'form': form, 'posts': posts, 'pivot': pivot, 'pivot2': pivot2})
 
 # todo view rewrite:
 # best practise ansehen wie views richtig aufgesetzt werden,
